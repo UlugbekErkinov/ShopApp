@@ -14,6 +14,37 @@ class Category(BaseModel):
         "self", on_delete=models.CASCADE, null=True, blank=True)
 
 
+class Option(BaseModel):
+    title = models.CharField(max_length=256)
+    slug = models.CharField(max_length=256)
+    is_filter = models.BooleanField(default=False)
+
+class OptionValue(BaseModel):
+    title = models.CharField(max_length=256)
+    option = models.ForeignKey(Option,
+                               on_delete=models.CASCADE, related_name="option_value")
+
+
+# class Color(models.Model):
+#     value = models.CharField(max_length=20)
+
+
+# class Version(models.Model):
+#     value = models.CharField(max_length=20)
+
+# class Equipment(models.Model):
+#     value = models.CharField(max_length=20)
+
+# class Memory(models.Model):
+#     value = models.CharField(max_length=20)
+
+# class ProductVariation(BaseModel):
+#     color = models.ForeignKey(Color, on_delete=models.CASCADE, verbose_name="Цвет товара")
+#     equipment = models.ForeignKey(
+#         Equipment, on_delete=models.CASCADE, verbose_name="Комплектация")
+#     version = models.ForeignKey(Version, on_delete=models.CASCADE, verbose_name="Версия")
+#     memory = models.ForeignKey(Memory, on_delete=models.CASCADE, verbose_name="Конфигурация памяти")
+
 class Product(BaseModel):
     title = models.CharField(max_length=256)
     slug = models.CharField(max_length=256)
@@ -28,11 +59,11 @@ class Product(BaseModel):
         max_digits=19, decimal_places=2, verbose_name="Sotilish narxi")
     price_discount = models.DecimalField(
         max_digits=19, decimal_places=2, null=True, blank=True, verbose_name="Chegirmadagi narxi(ustiga chizilgan)")
-
+    # price_variation = models.ManyToManyField(ProductVariation, on_delete=models.CASCADE, verbose_name = "pr")
     rate = models.IntegerField(default=0)
     comment_count = models.IntegerField(default=0)
-
     saveds = models.ManyToManyField(User, related_name="saved_products")
+    options = models.ManyToManyField(OptionValue, related_name="options")
 
     def set_image(self):
         main_image = ProductImage.objects.filter(
@@ -55,6 +86,9 @@ class Comment(BaseModel):
         User, related_name="comments", on_delete=models.CASCADE)
     rate = models.IntegerField(default=0)
     content = models.TextField()
+
+
+
 
 # SIGNAL
 # comment count, rate.

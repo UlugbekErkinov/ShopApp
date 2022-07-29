@@ -19,8 +19,27 @@ class User(AbstractUser):
         },
         null=True
     )
+    MALE = 'male'
+
+
+    FEMALE = 'female'
+
+    GENDER_STATUS = (
+        (MALE, 'male'),
+        (FEMALE, 'female'),
+    )
+
     created_at = models.DateTimeField(("date created"), auto_now_add=True, null=True)
     updated_at = models.DateTimeField(("date updated"), auto_now=True)
+    avatar = models.FileField(upload_to='avatars/', null=True, blank=True)
+    phone_number = models.CharField(max_length=14, null=True, blank=True)
+    birthday = models.DateField(null=True, blank=True)
+    location = models.CharField(max_length=256, null=True, blank=True)
+    job = models.CharField(max_length=256, null=True, blank=True)
+    job_location = models.CharField(max_length=256, null=True, blank=True)
+    gender = models.CharField(
+        max_length=10, choices=GENDER_STATUS, null=True, blank=True)
+    
 
     # SETTINGS
     USERNAME_FIELD = "email"

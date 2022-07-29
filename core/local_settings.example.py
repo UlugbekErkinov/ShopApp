@@ -6,7 +6,7 @@ DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "lenta",
+        "NAME": "asaxiyDB",
         "USER": "postgres",
         "PASSWORD": "admin",
         "HOST": "localhost",
@@ -23,10 +23,16 @@ CACHES = {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-        "KEY_PREFIX": "lenta",
+        "KEY_PREFIX": "asaxiy",
     },
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 
 
 # # CELERY

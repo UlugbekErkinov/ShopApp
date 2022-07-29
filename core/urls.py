@@ -27,7 +27,12 @@ urlpatterns = [
         login_required(browse),
         name="ckeditor_browse",
     ),
+    path('__debug__/', include('debug_toolbar.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('api/v1/', include('product.urls')),
+    path('api/v1/', include('order.urls')),
+    path('api/v1/', include('billing.urls')),
+
     path('admin/', admin.site.urls),
 ]
 
